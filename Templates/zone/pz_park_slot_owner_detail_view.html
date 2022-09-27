@@ -1,0 +1,120 @@
+{% extends 'basic.html' %}
+{% block body %} {% load widget_tweaks %}
+<div class="main-content" style="padding-top: 0px;">
+    <section class="au-breadcrumb ">
+		<div class="section__content section__content--p30">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="au-breadcrumb-content">
+							<div class="au-breadcrumb-left"> <i class="zmdi zmdi-home"></i>
+								<ul class="list-unstyled list-inline au-breadcrumb__list">
+									<li class="list-inline-item "> <a href="{% url 'dashboard' %}"><strong>Home</strong></a> </li>
+									<li class="list-inline-item seprate"> <span>/</span> </li>
+                                    <li class="list-inline-item"><strong>ParkSlot Detail Edit</strong></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	</br>
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <strong>Parking Slot Owner</strong>
+            <small>Form</small>
+        </div>
+
+             <div class="card-body card-block">
+                            <div class="form-group">
+                                <label class="form-control-label">Parking Slot</label><br>
+                                <input readonly class="form-control" value="{{park_slot_owner.park_slot}}">
+                            </div>
+                  <div class="form-group">
+                                <label class="form-control-label">Name</label><br>
+                                <input readonly class="form-control" value="{{park_slot_owner.name}}">
+                            </div>
+
+                <div class="form-group">
+                                <label class="form-control-label">Address</label><br>
+                                <input readonly class="form-control" value="{{park_slot_owner.address}}">
+                            </div>
+
+                <div class="form-group">
+                    <label class="form-control-label">City</label>
+                    <input readonly  class="form-control" value="{{park_slot_owner.city}}">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Mobile Number</label>
+                    <input readonly class="form-control" value="{{park_slot_owner.mobile_number}}">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label">Email</label>
+                       <input readonly class="form-control" value="{{park_slot_owner.email}}">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Password</label>
+                    <input class="form-control" readonly value="{{park_slot_owner.password}}">
+                </div>
+                <div class="form-group">
+                    <label class=" form-control-label">Aadhar Card</label>
+                    <input class="form-control" readonly value="{{park_slot_owner.aadhar_card}}">
+                </div>
+                <div class="form-group">
+                    <label class=" form-control-label">AadharCard Number</label>
+                    <input class="form-control" readonly value="{{park_slot_owner.aadhar_num}}">
+                </div>
+                <div class="form-group">
+                                    <label class="form-control-label">Bank Name</label>
+                    <input class="form-control" readonly value="{{park_slot_owner.bank_name}}">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Branch</label>
+                                    <input class="form-control" readonly value="{{park_slot_owner.branch}}">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Account Number</label>
+                                    <input class="form-control" readonly value="{{park_slot_owner.account_number}}">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">IFSC Code</label>
+                                    <input class="form-control" readonly value="{{park_slot_owner.ifsc_code}}">
+                                </div>
+                                 <div class="form-group">
+                                    <label class="form-control-label">Cancel Cheque</label>
+                                     <label class="form-control">
+                                      <img src="{{park_slot_owner.cancel_check.url}}" height="150" width="100"></label>
+                                </div>
+                <div class="form-group">
+                    <label class=" form-control-label">Commision</label>
+                    <input class="form-control" readonly value="{{park_slot_owner.commision}}">
+                </div>
+                {% if messages %}
+                <ul class="messages my-5 text-center">
+                    {% for message in messages %}
+                    <hr>
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                  <form action="{% url 'parkzone_park_slot_owner_detail_edit' %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" value="{{park_slot_owner.id}}" name="id" />
+                <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                    <span id="payment-button-amount">Edit</span>
+                    <span id="payment-button-sending" style="display: none;">Editing…</span>
+                </button>
+                  </form>
+            </div>
+        </form>
+    </div>
+
+</div>
+</div>
+{% endblock %}

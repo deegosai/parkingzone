@@ -1,0 +1,82 @@
+{% extends 'basic.html' %} {% load widget_tweaks %} {% block body %}
+
+<div class="main-content" style="padding-top: 0px;">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form action="{% url 'pz_uservehicle_create' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Vehicle Details </strong>
+                                <small> Add </small>
+                            </div>
+                            <div class="card-body card-block">
+                                <div class="form-group">
+                                    <label class="form-control-label">User</label>
+                                    {% render_field form.user.name class="form-control" %}
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Type Of Vehicle</label>
+                                    {% render_field form.type class="form-control" placeholder="Please Vehicle Type" %}
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Vehicle Registration No</label>
+                                    {% render_field form.vehicle_registration_no class="form-control" id="Address" placeholder="Please Enter Vehicle Registration No" %}
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Type Of Model</label>
+                                    {% render_field form.type_of_model class="form-control" id="City" placeholder="Please Enter Type Of Model" %}
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Color</label>
+                                    {% render_field form.color class="form-control" id="Mobile Number" placeholder="Please Enter Color" %}
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">RC Book No</label>
+                                    {% render_field form.rc_book_no class="form-control" id="Age" placeholder="Please Enter RC Book No" %}
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">RC Book Front File</label>
+                                    {% render_field form.rc_book_front_file class="form-control" %}
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">RC Book Back File</label>
+                                    {% render_field form.rc_book_back_file class="form-control" id="Password" %}
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Driving Lic Number</label>
+                                    {% render_field form.driving_lic_number class="form-control" placeholder="Please Enter Driving Lic Number" %}
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Driving Lic Photo</label>
+                                    {% render_field form.driving_lic_photo class="form-control" id="RC Book No" %}
+                                </div>
+
+                                <div>
+                                    {% if messages %}
+                                    <ul class="messages my-5 text-center">
+                                        {% for message in messages %}
+                                        <hr />
+                                        <div class="alert alert-success" role="alert">
+                                            {{ message }}
+                                        </div>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                    <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                                        <span id="payment-button-amount">Create</span>
+                                        <span id="payment-button-sending" style="display: none;">creating…</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

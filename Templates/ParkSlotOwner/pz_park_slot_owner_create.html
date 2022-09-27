@@ -1,0 +1,120 @@
+{% extends 'basic.html' %}
+{% block body %} {% load widget_tweaks %}
+<div class="main-content" style="padding-top: 0px;">
+    <div class="main-content" style="padding-top: 0px;">
+    <section class="au-breadcrumb ">
+		<div class="section__content section__content--p30">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="au-breadcrumb-content">
+							<div class="au-breadcrumb-left"> <i class="zmdi zmdi-home"></i>
+								<ul class="list-unstyled list-inline au-breadcrumb__list">
+									<li class="list-inline-item "> <a href="{% url 'dashboard' %}"><strong>Home</strong></a> </li>
+									<li class="list-inline-item seprate"> <span>/</span> </li>
+                                    <li class="list-inline-item "> <a href="{% url 'parkslot_owner_view_form' %}"><strong>ParkSlot Owner View</strong></a> </li>
+									<li class="list-inline-item seprate"> <span>/</span> </li>
+                                    <li class="list-inline-item"><strong>ParkSlot Owner Create</strong></a></li>
+
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	</br>
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <strong>Parking Slot Owner</strong>
+
+        </div>
+
+        <form action="{% url 'parkslot_owner_create_form'  %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-body card-block">
+                <div class="form-group">
+
+                            <label class=" form-control-label">Park Slot : {{form.park_slot}}</label>
+
+                        </div>
+                <div class="form-group">
+                    <label class="form-control-label">Name</label>
+                    {% render_field form.name class="form-control" id="Name" placeholder="Please Enter Name" %}
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Address</label>
+                    {% render_field form.address class="form-control" id="Address" placeholder="Please Enter Address" %}
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">City</label>
+                    {% render_field form.city class="form-control" id="City" placeholder="Please Enter City " %}
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Mobile Number</label>
+                    {% render_field form.mobile_number class="form-control" id="Mobile Number" placeholder="Please Enter Mobile Number" %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label">Email</label>
+                    {% render_field form.email class="form-control" placeholder="Enter Email" %}
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Password</label>
+                    {% render_field form.password class="form-control" id="Password" placeholder="Please Enter Password"  %}
+                </div>
+                <div class="form-group">
+                    <label class=" form-control-label">Aadhar Card</label>
+                    {% render_field form.aadhar_card class="form-control" %}
+                </div>
+                <div class="form-group">
+                    <label class=" form-control-label">AadharCard Number</label>
+                    {% render_field form.aadhar_num class="form-control" placeholder="Enter Aadharcard Number" %}
+                </div>
+                <div class="form-group">
+                                    <label class="form-control-label">Bank Name</label>
+                                    {% render_field form.bank_name class="form-control" id="bank_name"  placeholder="Enter Bank Name" %}
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Branch</label>
+                                    {% render_field form.branch class="form-control" id="branch" placeholder="Enter Branch Name"  %}
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Account Number</label>
+                                    {% render_field form.account_number class="form-control" id="account_number" placeholder="Enter Account Number" %}
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">IFSC Code</label>
+                                    {% render_field form.ifsc_code class="form-control" id="ifsc_code" placeholder="Enter Ifsc Code" %}
+                                </div>
+                                 <div class="form-group">
+                                    <label class="form-control-label">Cancel Cheque</label>
+                                    {% render_field form.cancel_check class="form-control" id="cancel_check"  %}
+                                </div>
+                <div class="form-group">
+                    <label class=" form-control-label">Commision</label>
+                    {% render_field form.commision class="form-control" placeholder="Enter Commision" placeholder="Enter Commision" %}
+                </div>
+                {% if messages %}
+                <ul class="messages my-5 text-center">
+                    {% for message in messages %}
+                    <hr>
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                    <span id="payment-button-amount">Create</span>
+                    <span id="payment-button-sending" style="display: none;">Creating…</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}

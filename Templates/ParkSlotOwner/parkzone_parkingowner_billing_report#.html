@@ -1,0 +1,120 @@
+{% extends 'basic.html' %}
+
+{% load widget_tweaks %}
+{% block body %}
+
+
+<div class="main-content" style="padding-top: 0px;">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                    <div class="col-lg-12">
+                            <form action="{% url 'pz_parking_owner_billing' %}" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="card">
+                                    <div class="card-header">
+                                        <strong>Parking Owner</strong>
+                                        <small>Billing</small>
+                                    </div>
+                                    <div class="card-body card-block row " >
+                                        <div >
+                                            <div class="form-group">
+                                                <strong class="form-control-label">Select Month:</strong>
+                                            </div>
+                                            <div>
+                                                {% if not start_date %}
+                                                <input type="month" value="{{form.month}}" name="month">
+                                                {% else %}
+                                                <input type="month" value="{{form.month}}" name="month">
+                                                {% endif %}
+                                            </div>
+
+                                        </div>
+
+
+                                        <div style="margin-left: 10%;margin-top: 2%;">
+                                            <div class="form-group">
+                                                <h4 class="form-control-label"></h4>
+                                            </div>
+
+                                            <div >
+                                                <form action="{% url 'pz_parking_owner_billing' %}" method="post">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="sbid" id="myinput" />
+                                                <button type="submit" id="button" class="btn btn-primary" style="margin-left: 15%;" ><i class="fa fa-download"></i> Get Detail</button>
+                                                </form>
+
+                                            </div>
+
+                                        </div>
+                                        <div style="margin-left: 10%;margin-top: 2%;">
+                                            <div class="form-group">
+                                                <h4 class="form-control-label"></h4>
+                                            </div>
+                                            <div >
+                                                <form action="{% url 'some_view' %}" method="POST">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="abc" id="excel" />
+                                                <button type="submit" id="button1" class="btn btn-primary" style="margin-left: 15%;" ><i class="fa fa-download"></i> Download</button>
+                                                </form>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+            </div>
+{% if summary_data %}
+        <div class="col-lg-12">
+
+                        <table class="table table-borderless table-striped table-earning">
+                            <thead>
+                            <tr>
+                                <th>Name Of Account Holder</th>
+                                <th>Account Number</th>
+                                <th>Bank Name</th>
+                                <th>IFSC Code</th>
+                                <th>Branch</th>
+                                <th>Amount</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for x in summary_data %}
+                            <tr>
+                                <td>{{x.name}}</td>
+                                <td>{{x.account_number}}</td>
+                                <td>{{x.bank_name}}</td>
+                                <td>{{x.ifsc_code}}</td>
+                                <td>{{x.branch}}</td>
+                                <td>{{x.booking_amount}}</td>
+
+                            </tr>
+
+                            {% endfor %}
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Grand Total : </td>
+                                <td>{{total}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+        {% endif %}
+
+
+    </div>
+</div>
+{% endblock %}

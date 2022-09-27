@@ -1,0 +1,53 @@
+{% extends 'basic.html' %}
+{% block body %} {% load widget_tweaks %}
+
+                <div class="col-lg-12">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>UserWallet</strong>
+                            <small>Create</small>
+                        </div>
+
+                        <form action="{% url 'userwallet_create_form' %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="card-body card-block">
+                                <div class="form-group">
+                                    <label class="form-control-label">user : {{form.user}}</label>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-control-label">Balance</label>
+                                    {% render_field form.balance class="form-control" placeholder="Enter your Balance" %}
+                                </div>
+
+
+                                        <div class="form-group">
+                                            <label class="form-control-label">Transaction Type</label>
+                                            {% render_field form.transaction_type class="form-control" placeholder="Enter Your credit card number " %}
+                                        </div>
+
+
+                                <div class="form-group">
+                                    <label class="form-control-label">transaction amount</label>
+                                    {% render_field form.transaction_amount class="form-control" placeholder="transaction amount" %}
+                                </div>
+                        {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                            <hr />
+                            <div class="alert alert-success" role="alert">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+<button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                                                        <span id="payment-button-amount">Create</span>
+                                                        <span id="payment-button-sending" style="display: none;">creating…</span>
+                                                    </button>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+       {% endblock %}

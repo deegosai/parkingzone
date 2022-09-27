@@ -1,0 +1,102 @@
+{% extends 'basic.html' %} {% load widget_tweaks %} {% block body %}
+<div class="main-content" style="padding-top: 0px;">
+	<section class="au-breadcrumb ">
+		<div class="section__content section__content--p30">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="au-breadcrumb-content">
+							<div class="au-breadcrumb-left"> <i class="zmdi zmdi-home"></i>
+								<ul class="list-unstyled list-inline au-breadcrumb__list">
+									<li class="list-inline-item "> <a href="{% url 'dashboard' %}"><strong>Home</strong></a> </li>
+									<li class="list-inline-item seprate"> <span>/</span> </li>
+									<li class="list-inline-item"><strong>Society List</strong></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	</br>
+	<div class="col-md-12">
+		<div class="table-responsive table--no-card m-b-30">
+			<table class="table table-borderless table-striped table-earning">
+				<thead>
+					<tr>
+						<th>Society Name</th>
+						<th>Location</th>
+						<th>City</th>
+						<th>number of parking</th>
+						<th>opening time</th>
+						<th>closing time</th>
+						<th> </th>
+					</tr>
+				</thead>
+				<tbody> {% if mysoc %} {% for x in mysoc %}
+					<tr>
+						<td>{{x.name}}</td>
+						<td>{{x.location}}</td>
+						<td>{{x.city}}</td>
+						<td>{{x.number_of_parking}}</td>
+						<td>{{x.opening_time}}</td>
+						<td>{{x.closing_time}}</td>
+						<td>
+							<div class="table-data-feature">
+								<button onclick="society({{x.id}})" data-target="#scrollmodal" data-toggle="modal" class="item" data-placement="top" title="History" style="font-size:18px"><i class="fa fa-eye"></i> </button>
+								<form action="{% url 'pz_society_edit' %}" method="POST"> {% csrf_token %}
+									<input type="hidden" value="{{x.id}}" name="socid" />
+									<button class="item" data-toggle="tooltip" data-placement="top" title="Edit" style="margin-right: 12px;"> <i class="zmdi zmdi-edit"></i> </button>
+								</form>
+								<form action="{% url 'pz_society_delete' %}" method="POST"> {% csrf_token %}
+									<input type="hidden" value="{{x.id}}" name="id" />
+									<button onclick="myFunction()" class="item" data-toggle="tooltip" title="Delete">
+										<script>
+										function myFunction() {
+											alert("Are You Confirm Deleted Data!");
+										}
+										</script> <i class="zmdi zmdi-delete"></i> </button>
+								</form>
+							</div>
+						</td>
+					</tr> {% endfor %} {% else %}
+					<div class="col-md-12">
+						<p class="text-center">Not Found Record</p>
+					</div> {% endif %} </tbody>
+			</table> {% include 'society/design.html' %} </div> {% if messages %}
+		<ul class="messages my-5 text-center"> {% for message in messages %}
+			<hr />
+			<div class="alert alert-success" role="alert"> {{ message }} </div> {% endfor %} </ul> {% endif %} </div>
+	<!-- END DATA TABLE -->
+</div>
+<div class="modal fade" id="scrollmodal" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="scrollmodalLabel">Society Detail</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+				</div>
+				<div class="modal-body">
+					<div class="card-body card-block" id="dynamicdiv"> </div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script>
+function society(id) {
+	$.ajax({
+		url: '/society_view1/',
+		method: 'POST',
+		data: {
+			'id': id,
+			csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+		},
+		success: function(result) {
+			$("#dynamicdiv").empty();
+			$("#dynamicdiv").append(result);
+			$("#scrollmodal").modal('toggle');
+		}
+	});
+}
+</script> {% endblock %}

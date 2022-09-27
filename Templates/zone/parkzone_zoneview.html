@@ -1,0 +1,182 @@
+{% extends 'basic.html' %} {% block body %}
+
+<div class="main-content" style="padding-top: 0px;">
+    <section class="au-breadcrumb ">
+		<div class="section__content section__content--p30">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="au-breadcrumb-content">
+							<div class="au-breadcrumb-left"> <i class="zmdi zmdi-home"></i>
+								<ul class="list-unstyled list-inline au-breadcrumb__list">
+									<li class="list-inline-item "> <a href="{% url 'dashboard' %}"><strong>Home</strong></a> </li>
+									<li class="list-inline-item seprate"> <span>/</span> </li>
+                                    <li class="list-inline-item"><strong>Zone List</strong></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	</br>
+                <div class="col-lg-12">
+                    <form action="{% url 'Zone_view' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Parking Slot </strong>
+                                <small>view</small>
+                            </div>
+
+                            <div>
+                                <div class="card-body card-block row">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Select Society : </label>
+                                    </div>
+                                    <div>
+                                        <select name="society" class="form-control-label form-control">
+                                            {% for x in society %}
+                                            <option value="{{x.id}}">{{x.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div>
+
+
+                                        <button type="submit" id="button" class="btn btn-primary btn-sm active" style="margin-left: 15%;">Get Park Slot</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+{% if zone %}
+       <div class="col-md-12">
+                <div class="table-responsive table--no-card m-b-30">
+                    <table id="example" class="table table-borderless table-striped table-earning" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Society</th>
+                                <th>Slot Name</th>
+                                <th>Available Status</th>
+                                <th>Is Reserved Slot </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                            {% for x in zone %}
+
+                            <tr>
+                                <td>{{ x.society.name}}</td>
+
+                                <td>{{ x.slot_name }}</td>
+
+
+                                {% if x.get_availability_status_display == "Free" %}
+                                <td><span class="badge badge-pill badge-success">{{ x.get_availability_status_display }}</span></td>
+                                {% elif x.get_availability_status_display == "Booked" %}
+                                <td><span class="badge badge-pill badge-danger">{{ x.get_availability_status_display }}</span></td>
+                                {% elif x.get_availability_status_display == "Requested" %}
+                                <td><span class="badge badge-pill badge-warning">{{ x.get_availability_status_display }}</span></td>
+                                {% endif %}
+                                {% if x.is_reserved_slot == True %}
+                                <td>Yes</td>
+                                {% else %}
+                                <td>No</td>
+                                {% endif %}
+                                <td>
+                                    <div class="table-data-feature">
+                                            <button onclick="zoneview({{x.id}})" data-target="#scrollmodal"
+                                                            data-toggle="modal" class="item"
+                                                            data-placement="top"
+                                                            title="History" style="font-size:18px"><i class="fa fa-eye"></i>
+                                                    </button>
+                                        <form action="{% url 'Zone_edit' %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" value="{{x.id}}" name="userid" />
+                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Edit" style="margin-right: 12px;">
+                                                <i class="zmdi zmdi-edit"></i>
+                                            </button>
+                                        </form>
+
+                                        <form action="{% url 'Zone_delete' %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" value="{{x.id}}" name="userid" />
+                                            <button onclick="myFunction()" class="item" data-toggle="tooltip" title="Delete">
+                                                <script>
+                                                    function myFunction() {
+                                                        alert("Are you sure to delete ?");
+                                                    }
+                                                </script>
+
+                                                <i class="zmdi zmdi-delete"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% if messages %}
+                <ul class="messages my-5 text-center">
+                    {% for message in messages %}
+                    <hr />
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+    {% endif %}
+</div>
+<div class="modal fade" id="scrollmodal" tabindex="-1" role="dialog"
+     aria-labelledby="scrollmodalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="scrollmodalLabel">Society Secretry Detail</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body card-block" id="dynamicdiv">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function zoneview(id){
+    $.ajax({
+            url: '/Zone_popupview/',
+            method: 'POST',
+            data: {
+                'id' : id,
+                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(result)
+            {
+
+               $("#dynamicdiv").empty();
+               $("#dynamicdiv").append(result);
+                $("#scrollmodal").modal('toggle');
+            }
+        });
+    }
+
+
+
+
+</script>
+{% endblock %}

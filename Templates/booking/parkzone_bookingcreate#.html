@@ -1,0 +1,66 @@
+{% extends 'basic.html' %} {% load widget_tweaks %} {% block body %}
+<script>
+    function myFunction() {
+        var x = document.getElementById("mySelect").value;
+        print(x,"<<<<<")
+    }
+</script>
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <strong>Booking</strong>
+            <small>Create</small>
+        </div>
+
+        <form action="{% url 'Booking_create'  %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-body card-block">
+                <div class="form-group">
+                    <label class="form-control-label">User : {{form.user}}</label>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Building : {{form.building}}</label>
+                </div>
+                <div class="form-group">
+                    <label>vehicle_type</label>
+                    {% render_field form.vehicle_type class="form-control" %}
+                </div>
+                <div class="form-group">
+                    <label>Booking Date</label>
+                    {% render_field form.booking_date class="form-control" id="date" %}
+                </div>
+
+                <div class="form-group">
+                    <label>Service Package Details</label>
+                    {% render_field form.services_package_details class="form-control" id="mySelect" onchange=myFunction  %}
+                </div>
+                <div class="form-group">
+                    <label>Amount</label>
+                    {% if form.services_package_details='Weekly'  %}
+                    {% if form.vehicle_type=4 Wheeler%}
+                        {% render_field form.building.society.two_wheel_weekly_price class="form-control" id="amount"  %}
+                </div>
+                <div class="form-group">
+                    <label>Booking Status</label>
+                    {% render_field form.booking_status class="form-control" id="mySelect" onchange=myFunction  %}
+                </div>
+                {% if messages %}
+                <ul class="messages my-5 text-center">
+                    {% for message in messages %}
+                    <hr />
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                    <span id="payment-button-amount">Create</span>
+                    <span id="payment-button-sending" style="display: none;">Creating…</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

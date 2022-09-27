@@ -1,0 +1,59 @@
+{% extends 'basic.html' %}
+
+{% load widget_tweaks %}
+{% block body %}
+
+
+
+<div class="main-content" style="padding-top: 0px;">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive table--no-card m-b-30">
+                        <table id="example" class="table table-borderless table-striped table-earning"
+                               style="width:100%">
+                            <thead>
+
+                            <tr>
+                                <th>Parkslot</th>
+                                <th>Parking ID</th>
+                                <th>Zone Status</th>
+
+
+
+                            </tr>
+                            </thead>
+
+
+                                {% for x in zone_records %}
+                            <tr>
+                                <td>{{ x.Park_slot }}</td>
+                                <td>{{ x.parking_id }}</td>
+                                <td>{{ x.zone_status }}</td>
+                            </tr>
+                            {% endfor %}
+
+                        </table>
+
+
+                    </div>
+                      {% if messages %}
+                    <ul class="messages my-5 text-center">
+                        {% for message in messages %}
+                        <hr>
+                        <div class="alert alert-success" role="alert">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

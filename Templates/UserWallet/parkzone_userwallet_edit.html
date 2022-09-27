@@ -1,0 +1,66 @@
+{% extends 'basic.html' %}
+{% block body %} {% load widget_tweaks %}
+
+                <div class="col-lg-12">
+
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>UserWallet</strong>
+                            <small>Update</small>
+                        </div>
+
+                        <form action="{% url 'userwallet_update_form' %}" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" value="{{user.id}}" name="User" />
+                            <input type="hidden" value="{{user.user_id}}" name="User_id" />
+                            {% csrf_token %}
+                            <div class="card-body card-block">
+                                <div class="form-group">
+                                    <label class="form-control-label">user</label>
+                                    {% render_field form.user class="form-control" value=form.user %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-control-label">Balance</label>
+                                    {% render_field form.balance class="form-control" value=form.balance placeholder="Enter your Balance" %}
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label">credit card no</label>
+                                            {% render_field form.credit_card_num class="form-control" value=form.credit_card_num placeholder="credit card no" %}
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label">net banking no</label>
+                                            {% render_field form.net_banking_num class="form-control" value=form.net_banking_num placeholder="net banking no" %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">transaction type</label>
+                                    {% render_field form.transaction_type class="form-control" value=form.transaction_type placeholder="transaction type" %}
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">last transaction amount</label>
+                                    {% render_field form.transaction_amount class="form-control" value=form.transaction_amount placeholder="transaction amount" %}
+                                </div>
+                                </div>
+                            {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                            <hr />
+                            <div class="alert alert-danger" role="alert">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                                                        <span id="payment-button-amount">Update</span>
+                                                        <span id="payment-button-sending" style="display: none;">updating…</span>
+                                                    </button>
+                        </form>
+                    </div>
+                </div>
+           {% endblock %}

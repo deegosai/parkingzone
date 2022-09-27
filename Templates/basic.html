@@ -1,0 +1,659 @@
+{% load static %}
+<html lang="en">
+
+<head>
+	<!-- Required meta tags-->
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="au theme template" />
+	<meta name="author" content="Hau Nguyen" />
+	<meta name="keywords" content="au theme template" />
+	<!-- Title Page-->
+	<title>Park Zone</title>
+	<!-- Fontfaces CSS-->
+	<link href="{% static 'css/font-face.css' %}" rel="stylesheet" media="all" />
+	<link href="{% static 'vendor/font-awesome-4.7/css/font-awesome.min.css' %}" rel="stylesheet" media="all" />
+	<link href="{% static 'vendor/font-awesome-5/css/fontawesome-all.min.css' %}" rel="stylesheet" media="all" />
+	<link href="{% static 'vendor/mdi-font/css/material-design-iconic-font.min.css' %}" rel="stylesheet" media="all" />
+	<link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+	<!-- Bootstrap CSS-->
+	<link href="{% static 'vendor/bootstrap-4.1/bootstrap.min.css' %}" rel="stylesheet" media="all" />
+	<!-- Vendor CSS-->
+	<link href="{% static 'vendor/animsition/animsition.min.css' %}" rel="stylesheet" media="all" />
+	<link href="{% static 'vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css' %}" rel="stylesheet" media="all" />
+	<link href="{% static 'vendor/wow/animate.css' %}" rel="stylesheet" media="all" />
+	<link href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}" rel="stylesheet" media="all" />
+	<link href="{% static 'vendor/slick/slick.css' %}" rel="stylesheet" media="all" />
+	<link href="{% static 'vendor/select2/select2.min.css' %}" rel="stylesheet" media="all" />
+	<link href="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.css' %}" rel="stylesheet" media="all" />
+	<!-- Main CSS-->
+	<link href="{% static 'css/theme.css' %}" rel="stylesheet" media="all" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/css/datepicker.min.css" rel="stylesheet"> </head>
+
+<body class="animsition">
+	<div class="page-wrapper">
+		<aside class="menu-sidebar d-none d-lg-block">
+			<div class="logo">
+				<a href="#"> <img src="{% static 'images/pz_logo.png' %}" alt="Park Zone" /> </a>
+			</div>
+			<div class="menu-sidebar__content js-scrollbar1">
+				<nav class="navbar-sidebar">
+					<ul class="list-unstyled navbar__list"> {% if request.session.usertype == 'admin' %}
+						<li class="active has-sub">
+							<a class="js-arrow" href="{% url 'dashboard' %}"> <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-book"></i>Reports</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li> <a href="{% url 'pz_society_billing' %}">Society Billing Report</a> </li>
+								<li> <a href="{% url 'society_and_admin_payment_report' %}">Make Payment To Society Secretry</a> </li>
+								<li> <a href="{% url 'society_payment_record' %}">Society Payment Report</a> </li>
+								<li> <a href="{% url 'watchman_payment_record' %}">Watchman Report</a> </li>
+								<li> <a href="{% url 'parkingslotowner_and_admin_payment_report' %}">Make Payment To Park Slot Owner</a> </li>
+								<li> <a href="{% url 'parkslot_owner_payment_record' %}">Parkslot owner payment record</a> </li>
+							</ul>
+						</li>
+						<li class="{{society_view_active}} has-sub {{view_tab}}">
+                        <a class="js-arrow"  href="#"> <i class="fas fa-gear"></i>Society</a>
+                        <ul class="list-unstyled navbar__sub-list js-sub-list" style="{{view_style}}">
+                            <li class="{{is_active_view1}}">
+                                <a href="{% url 'pz_society_view' %}">Society View</a>
+                            </li>
+                            <li class="{{is_active_view2}}">
+                                <a href="{% url 'pz_society_create' %}">Society Create</a>
+                            </li>
+                        </ul>
+                    </li>
+						<li class="{{for_active}} has-sub {{view_tab}}">
+							<a class="js-arrow" href="#"> <i class="fas fa-user"></i>Society Secretry</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list" style="{{view_style}}">
+								<li class="{{is_active_view3}}"> <a href="{% url 'Societysecretry_view' %}">Society Secretry View</a> </li>
+								<li > <a href="{% url 'Societysecretry_create' %}">Society Secretry Create</a> </li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-circle"></i> Park Slot</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li class="{{is_active_view4}}"> <a href="{% url 'Zone_view' %}">Park Slot View</a> </li>
+								<li> <a href="{% url 'Zone_create' %}">Park Slot Create</a> </li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-user"></i>Parking Slot Owner</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li> <a href="{% url 'parkslot_owner_view_form' %}">Parking Slot Owner View</a> </li>
+								<li> <a href="{% url 'parkslot_owner_create_form' %}">Parking Slot Owner Create</a> </li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-male"></i>Watchman</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li> <a href="{% url 'watchman_view' %}">Watchman View</a> </li>
+								<li> <a href="{% url 'watchman_create' %}">Watchman Create</a> </li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-users"></i>Users</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li class="active"> <a href="{% url 'pz_user_view' %}">Users View</a> </li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-credit-card"></i>User Wallet</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li class="active"> <a href="{% url 'userwallet_view_form' %}">Wallet Views</a> </li>
+								<li class="active"> <a href="{% url 'userWallet_bonus_add' %}">Add Money</a> </li>
+								<!--                            <li class="active">-->
+								<!--                                <a href="{% url 'userwallet_create_form' %}">Credit/Debit Money</a>-->
+								<!--                            </li>-->
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-gear"></i>Booking</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li class="active"> <a href="{% url 'Booking_view' %}">Booking View</a> </li>
+							</ul>
+						</li> {% endif %}
+						<!---------------------------------------                   Parking Slot owner Permissions           -------------------------------------------------------->{% if request.session.usertype == 'parkingslotowner' %}
+						<li>
+							<a href="{% url 'dashboard' %}"> <i class="fa fa-chart-bar"></i>Dashboard</a>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-building"></i>Parking Slot</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li> <a href="{% url 'parkzone_park_slot_detail_view' %}">Parking Slot View</a> </li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-user"></i>Parking Slot Owner</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li> <a href="{% url 'parkzone_park_slot_owner_detail_view' %}">Parking Slot Owner View</a> </li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-gear"></i>Society</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li> <a href="{% url 'pz_society_detail_view' %}">Society View</a> </li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-users"></i>Booking User</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li> <a href="{% url 'parkzone_user_view' %}">Booking User View</a> </li>
+							</ul>
+						</li> {% endif %}
+						<!---------------------------------------                   Society Secretry Permissions           -------------------------------------------------------->{% if request.session.usertype == 'societysecretry' %}
+						<li class="active has-sub">
+							<a class="js-arrow" href="{% url 'dashboard' %}"> <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-book"></i>Reports</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li> <a href="{% url 'pz_society_billing' %}">Society Billing Report</a> </li>
+								<li> <a href="{% url 'society_and_admin_payment_report' %}">Make Payment To Society Secretry</a> </li>
+								<li> <a href="{% url 'society_payment_record' %}">Society Payment Report</a> </li>
+								<li> <a href="{% url 'watchman_payment_record' %}">Watchman Report</a> </li>
+								<li> <a href="{% url 'parkingslotowner_and_admin_payment_report' %}">Make Payment To Park Slot Owner</a> </li>
+								<li> <a href="{% url 'parkslot_owner_payment_record' %}">Parkslot owner payment record</a> </li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-gear"></i>Society</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li> <a href="{% url 'pz_society_detail' %}">Society View</a> </li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-desktop"></i>Society Secretry</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li> <a href="{% url 'Societysecretry_profile_view' %}">Society Secretry View</a> </li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-circle"></i> Park Slot</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li class="active"> <a href="{% url 'Zone_view' %}">Park Slot View</a> </li>
+								<li> <a href="{% url 'Zone_create' %}">Park Slot Create</a> </li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-user"></i>Parking Slot Owner</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li> <a href="{% url 'parkslot_owner_view_form' %}">Parking Slot Owner View</a> </li>
+								<li> <a href="{% url 'parkslot_owner_create_form' %}">Parking Slot Owner Create</a> </li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-male"></i>Watchman</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li> <a href="{% url 'watchman_view' %}">Watchman View</a> </li>
+								<li> <a href="{% url 'watchman_create' %}">Watchman Create</a> </li>
+							</ul>
+						</li>
+						<li class="has-sub">
+							<a class="js-arrow" href="#"> <i class="fas fa-users"></i>Booking User</a>
+							<ul class="list-unstyled navbar__sub-list js-sub-list">
+								<li> <a href="{% url 'user_record' %}">Booking User View</a> </li>
+							</ul>
+						</li> {% endif %} </ul>
+				</nav>
+			</div>
+		</aside> END MENU SIDEBAR
+		<!-- PAGE CONTAINER-->
+		<div class="page-container">
+			<!-- HEADER DESKTOP-->
+			<header class="header-desktop">
+				<div class="section__content section__content--p30">
+					<div class="container-fluid">
+						<div class="header-wrap">
+							<form class="form-header" action="" method="POST">
+								<!--                                    <input class="au-input au-input&#45;&#45;xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />-->
+								<!--                                    <button class="au-btn&#45;&#45;submit" type="submit">-->
+								<!--                                        <i class="zmdi zmdi-search"></i>-->
+								<!--                                    </button>-->
+							</form>
+							<div class="header-button">
+								<div class="noti-wrap"> {% if request.session.usertype == 'admins' %}
+									<div class="noti__item js-item-menu"> <i class="zmdi zmdi-notifications"></i> <span class="quantity not">{{count}}</span>
+										<div class="notifi-dropdown js-dropdown">
+											<div class="notifi__title">
+												<p>You have Notifications</p>
+											</div>
+											<div class="notifi__item">
+												<div class="bg-c1 img-cir img-40"> <i class="zmdi zmdi-email-open"></i> </div>
+												<div class="content">
+													<p></p> <span class="date">April 12, 2018 06:50</span> </div>
+											</div>
+											<div class="notifi__item">
+												<div class="bg-c2 img-cir img-40"> <i class="zmdi zmdi-account-box"></i> </div>
+												<div class="content">
+													<p>Your account has been blocked</p> <span class="date">April 12, 2018 06:50</span> </div>
+											</div>
+											<div class="notifi__item">
+												<div class="bg-c3 img-cir img-40"> <i class="zmdi zmdi-file-text"></i> </div>
+												<div class="content">
+													<p>You got a new file</p> <span class="date">April 12, 2018 06:50</span> </div>
+											</div>
+											<div class="notifi__footer"> <a href="#">All notifications</a> </div> {% endif %} {% if request.session.usertype == 'societysecretry' %}
+											<div class="header-button">
+												<div class="noti-wrap">
+													<a href="{% url 'notifaction_detail' %}">
+														<div class="noti__item js-item-menu"> <i class="zmdi zmdi-comment-more"></i> </div>
+													</a>
+												</div>
+												<div class="noti__item js-item-menu"> <i class="zmdi zmdi-notifications"></i> <span class="quantity not">{{count}}</span>
+													<div class="notifi-dropdown js-dropdown">
+														<div class="notifi__title">
+															<p>You have Notifications</p>
+														</div> {% for x in ss_notify %} {% if x.is_read == False %}
+														<div class="notifi__item">
+															<div class="bg-c1 img-cir img-40"> <i class="zmdi zmdi-email-open"></i> </div>
+															<div class="content" id="ss_notify" onclick="ss_notify()">
+																<input type="hidden" name="msg_notify" id="msg_notify" value="{{x.id}}">
+																<p>{{x.message}}</p> <span class="date">{{x.date}}</span> </div>
+														</div> {% endif %} {% endfor %} </div>
+												</div> {% endif %} {% if request.session.usertype == 'parkingslotowner' %}
+												<div class="header-button">
+													<div class="noti-wrap">
+														<a href="{% url 'notifaction_detail' %}">
+															<div class="noti__item js-item-menu"> <i class="zmdi zmdi-comment-more"></i> </div>
+														</a>
+													</div>
+													<div class="noti__item js-item-menu"> <i class="zmdi zmdi-notifications"></i> <span class="quantity not">{{count}}</span>
+														<div class="notifi-dropdown js-dropdown">
+															<div class="notifi__title">
+																<p>You have Notifications</p>
+															</div> {% for x in po_notify %} {% if x.is_read == False %}
+															<div class="notifi__item">
+																<div class="bg-c1 img-cir img-40"> <i class="zmdi zmdi-email-open"></i> </div>
+																<div class="content" id="po_notify" onclick="ss_notify()">
+																	<input type="hidden" name="msg_notify" id="msg_notify" value="{{x.id}}">
+																	<p>{{x.message}}</p> <span class="date">{{x.date}}</span> </div>
+															</div> {% endif %} {% endfor %} </div>
+													</div> {% endif %}
+													<div class="account-wrap">
+														<div class="account-item clearfix js-item-menu">
+															<!--                                                                                <div class="image">-->
+															<!--                                                                                    <img src="{% static 'images/icon/avatar-01.jpg' %}" alt="John Doe" />-->
+															<!--                                                                                </div>-->
+															<div class="content noti__item"> <i class="zmdi zmdi-settings"></i> </div>
+															<div class="account-dropdown js-dropdown">
+																<div class="account-dropdown__body">
+																	<div class="account-dropdown__item">
+																		<a href="#"> <i class="zmdi zmdi-account"></i>Admin</a>
+																	</div>
+																</div>
+																<div class="account-dropdown__footer">
+																	<a href="{% url 'logout' %}"> <i class="zmdi zmdi-power"></i>Logout</a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+			</header>
+			</br>
+			</br> {% block body %}{% endblock %}
+			<footer>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="copyright">
+							<p>Copyright © 2020 By Lucson Infotech</p>
+						</div>
+					</div>
+				</div>
+			</footer>
+			</div>
+			</div>
+			</div>
+			</div>
+			</div>
+			<!-- END MAIN CONTENT-->
+			<!-- END PAGE CONTAINER-->
+			<!-- Jquery JS-->
+			<script src="{% static 'vendor/jquery-3.2.1.min.js' %}"></script>
+
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+
+			<!-- Bootstrap JS-->
+			<script src="{% static 'vendor/bootstrap-4.1/popper.min.js' %}"></script>
+			<script src="{% static 'vendor/bootstrap-4.1/bootstrap.min.js' %}"></script>
+			<!-- Vendor JS       -->
+			<script src="{% static 'vendor/slick/slick.min.js' %}"></script>
+			<script src="{% static 'vendor/wow/wow.min.js' %}"></script>
+			<script src="{% static 'vendor/animsition/animsition.min.js' %}"></script>
+			<script src="{% static 'vendor/bootstrap-progressbar/bootstrap-progressbar.min.js' %}"></script>
+			<script src="{% static 'vendor/counter-up/jquery.waypoints.min.js' %}"></script>
+			<script src="{% static 'vendor/counter-up/jquery.counterup.min.js' %}"></script>
+			<script src="{% static 'vendor/circle-progress/circle-progress.min.js' %}"></script>
+			<script src="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+			<script src="{% static 'vendor/chartjs/Chart.bundle.min.js' %}"></script>
+			<script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+			<!-- Main JS-->
+			<script src="{% static 'js/main.js' %}"></script>
+			<script>
+			$(document).ready(function()
+			{
+				var ctx = document.getElementById('admincommision').getContext('2d');
+				var myChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: [{% for x in var %}'{{x.month}}',{% endfor %}],
+
+						datasets: [{
+							label: '# Admin Commision',
+							data: [{% for y in var %} {{y.amount}}, {% endfor %}],
+							backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+							borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+							borderWidth: 1
+						}]
+					},
+					options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero: true
+								}
+							}]
+						}
+					}
+				});
+			});
+			</script>
+	<script>
+	$(document).ready(function()
+    {
+    var ctx = document.getElementById('mychart1').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: [{% for x in x_axis %}'{{x}}',{% endfor %}],
+            datasets: [{
+                label: '# Booking',
+                data: [{% for x in y_axis %}{{x}},{% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+     });
+    });
+
+
+ $(document).ready(function()
+    {
+    var ctx = document.getElementById('user').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+        labels: [{% for x in x_axis1 %}'{{x}}',{% endfor %}],
+            datasets: [{
+                label: '# user_booking',
+                data: [{% for x in y_axis1 %}{{x}},{% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+     });
+    });
+
+
+ $(document).ready(function()
+    {
+    var ctx = document.getElementById('mychart2').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: [{% for x in x_axis %}'{{x}}',{% endfor %}],
+            datasets: [{
+                label: '# Booking',
+                data: [{% for x in y_axis %}{{x}},{% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+     });
+    });
+
+
+ $(document).ready(function()
+    {
+    var ctx = document.getElementById('mychart3').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: [{% for x in x_axis %}'{{x}}',{% endfor %}],
+            datasets: [{
+                label: '# Booking',
+                data: [{% for x in y_axis %}{{x}},{% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+     });
+    });
+
+			</script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script>
+			<script>
+			$("#datepicker").datepicker({
+				format: "mm-yyyy",
+				startView: "months",
+				minViewMode: "months"
+			});
+			</script>
+			<script>
+			function chart4() {
+				$.ajax({
+					type: 'post',
+					url: '/dashboard/',
+					data: {
+						'city_selected': $('#city_select').val(),
+						csrfmiddlewaretoken: '{{csrf_token}}'
+					},
+					success: function(data) {
+
+
+
+						arr=data.split("&");
+
+						$(document).ready(function() {
+							var ctx = document.getElementById('mychart4').getContext('2d');
+							var myChart = new Chart(ctx, {
+								type: 'bar',
+								data: {
+									labels: [arr[0]],
+									datasets: [{
+										label: '# City wise Parkslot count ',
+										data: [arr[1]],
+										backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+										borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+										borderWidth: 1
+									}]
+								},
+								options: {
+									scales: {
+										yAxes: [{
+											ticks: {
+												beginAtZero: true
+											}
+										}]
+									}
+								}
+							});
+						});
+
+					},
+					error: function(response, error) {}
+				});
+			}
+
+			function chart5() {
+				var one = document.getElementById("city"); // Get the element with id="demo"
+				var two = document.getElementById("start_date"); // Get the element with id="demo"
+				var three = document.getElementById("end_date"); // Get the element with id="demo"
+				if($("#city").val() == "" || $("#city").val() == "notme" || $("#start_date").val() == "" || $("#end_date").val() == "") {} else {
+					$.ajax({
+						type: 'post',
+						url: '/dashboard/',
+						data: {
+							'city': $('#city').val(),
+							'start_date': $('#start_date').val(),
+							'end_date': $('#end_date').val(),
+							csrfmiddlewaretoken: '{{csrf_token}}'
+						},
+						success: function(data) {
+							var obj = JSON.parse(data);
+							var text = [];
+							var text1 = [];
+							var x;
+							var count = 0;
+							for(x in obj) {
+								text.push(parseInt(obj[x]));
+								text1.push(x);
+							}
+							var ctx = document.getElementById('mychart5').getContext('2d');
+							var myChart = new Chart(ctx, {
+								type: 'bar',
+								data: {
+									labels: text1,
+									datasets: [{
+										label: '# City wise Parkslot count ',
+										data: text,
+										backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+										borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+										borderWidth: 1
+									}]
+								},
+								options: {
+									scales: {
+										yAxes: [{
+											ticks: {
+												beginAtZero: true
+											}
+										}]
+									}
+								}
+							});
+						},
+						error: function(response, error) {}
+					});
+				}
+			}
+			</script>
+			<script>
+			function ss_notify() {
+				alert("hi");
+				var notify = $('#msg_notify').val();
+				$.ajax({
+					url: '/parkzone_notify_change/',
+					method: 'POST',
+					data: {
+						'id': notify,
+						csrfmiddlewaretoken: '{{ csrf_token }}'
+					},
+					success: function(result) {
+						alert(result);
+					}
+				});
+			}
+			</script>
+</body>
+
+</html>
+<!-- end document-->

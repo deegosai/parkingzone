@@ -1,0 +1,120 @@
+{% extends 'basic.html' %}
+{% block body %} {% load widget_tweaks %}
+<div class="main-content" style="padding-top: 0px;">
+    <form action="{% url 'user_activity' %}" method="post">
+        <section class="au-breadcrumb ">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="au-breadcrumb-content">
+                                <div class="au-breadcrumb-left"><i class="zmdi zmdi-home"></i>
+                                    <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                        <li class="list-inline-item "><a
+                                                href="{% url 'dashboard' %}"><strong>Home</strong></a></li>
+                                        <li class="list-inline-item seprate"><span>/</span></li>
+                                        <li class="list-inline-item "><a href="{% url 'pz_user_view' %}"><strong>User
+                                            List</strong></a></li>
+                                        <li class="list-inline-item seprate"><span>/</span></li>
+                                        <li class="list-inline-item"><strong>User Activity</strong></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <div class="col-lg-12">
+            <div class="row user-data m-b-30">
+                <div class="col-lg-4">
+                    <select class="form-control-label" id="catlist" name="catlist" onchange="setCategory()">
+
+                        <option selected>Select Category</option>
+                        <option value="Profile">Profile</option>
+                        <option value="Booking">Booking</option>
+                        <option value="Vehicle">Vehicle</option>
+                        <option value="Wallet">Wallet</option>
+
+                    </select>
+                </div>
+                <div class="col-lg-4">
+
+                    <div class="input-group">
+                   <input type="date" id="datefilter" name="datefilter">
+                    </div>
+                </div>
+                <div class="col-lg-4">
+
+                    {% csrf_token %}
+                    <input id="userid" name="userid" type="hidden" value="{{userid}}"/>
+                    <button class="btn btn-primary btn-sm active" id="button" style="margin-left: 15%;" type="submit">
+                        Get Result
+                    </button>
+                </div>
+            </div>
+
+            <div class="au-card au-card--no-shadow au-card--no-pad m-b-40 au-card--border">
+                <div class="au-card-title">
+                    <div class="bg-overlay bg-overlay--blue"></div>
+                    <h3>
+                        <i class="zmdi zmdi-account-calendar"></i>{{username}}'s Activity</h3>
+
+                </div>
+                {% if activity %}
+                <div class="au-task js-list-load au-task--border">
+
+                    <div class="au-task-list js-scrollbar3">
+                        {% for x in activity %}
+                        <div class="au-task__item au-task__item--success">
+                            <div class="au-task__item-inner">
+                                <h5 class="task">
+
+                                    <a href="#">{{ x.activity}}</a>
+                                </h5>
+                                <span class="time">at {{ x.created_at }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% else %}
+                <div class="au-task js-list-load au-task--border">
+                    <br>
+                    <h5> No activities performed yet</h5>
+                    <br>
+                </div>
+                {% endif %}
+
+            </div>
+
+
+        </div>
+    </form>
+</div>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <hr/>
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<script>
+    function setCategory() {
+        var total = document.getElementById("catlist").value;
+        var main = document.getElementById("user").value;
+        alert(main,"main");
+        document.getElementById("category").value=total;
+        document.getElementById("button").value=userid;
+    }
+
+</script>
+<!--</div></div>-->
+{% endblock %}

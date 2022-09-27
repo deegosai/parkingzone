@@ -1,0 +1,94 @@
+{% extends 'basic.html' %}
+
+
+{% block body %}
+
+<div class="main-content" style="padding-top: 0px;">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <form class="form-header" method="GET">
+                                <input class="au-input au-input--xl" type="text" name="newdata" value="{{ request.GET.newdata }}" placeholder="Search for datas" />
+                                <button class="btn btn-lg btn-info" type="submit">
+                                    <i class="zmdi zmdi-search"></i>
+                                </button>
+                            </form>
+                        </br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive table--no-card m-b-30">
+                        <table class="table table-borderless table-striped table-earning">
+                            <thead>
+                            <tr>
+                                <th>UserName</th>
+                                <th>City</th>
+                                <th>Mobile Number</th>
+                                <!--<th>age</th>-->
+                                <th>Email</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if newdata %}
+
+                            {% for x in data %}
+                            {% ifchanged x.name %}
+                            <tr>
+                                <td>{{ x.name }}</td>
+                                <td>{{ x.city }}</td>
+                                <td>{{ x.mobile_number }}</td>
+                                <td>{{ x.email }}</td>
+                            </tr>
+                            {% endifchanged %}
+                            {% endfor %}
+                            {% else %}
+
+                             <div class="col-md-12"><p class="text-center">Not Found Record</p></div>
+                             {% endif %}
+
+                            </tbody>
+                        </table>
+                        {% if zone_records.has_other_pages %}
+  <ul class="pagination">
+      {% if newdata.has_previous %}
+      <li class="page-item">
+      <a class="page-link" href="?page={{ newdata.previous_page_number }}">Previous</a>
+    </li>
+      {% else %}
+      {% for i in newdata.paginator.page_range %}
+    {% if newdata.number == i %}
+    <li class="page-item"><a class="page-link" >1</a></li>
+      {% else %}
+    <li class="page-item active">
+      <a class="page-link" href="?page={{ newdata.next_page_number }}">2 <span class="sr-only">(current)</span></a>
+    </li>
+      {% endif %}
+ {% endfor %}
+      {% if newdata.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ newdata.next_page_number }}">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ newdata.next_page_number }}">Next</a>
+    </li>
+      {% endif %}
+  </ul>
+       {% endif %}
+        {% endif %}
+</nav>
+                    </div>
+               {% if messages %}
+                    <ul class="messages my-5 text-center">
+                        {% for message in messages %}
+                        <hr/>
+                        <div class="alert alert-success" role="alert">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

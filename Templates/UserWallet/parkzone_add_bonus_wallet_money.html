@@ -1,0 +1,60 @@
+{% extends 'basic.html' %} {% block body %}
+
+<div class="main-content"  style="padding-top: 0px;">
+<section class="au-breadcrumb ">
+		<div class="section__content section__content--p30">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="au-breadcrumb-content">
+							<div class="au-breadcrumb-left"> <i class="zmdi zmdi-home"></i>
+								<ul class="list-unstyled list-inline au-breadcrumb__list">
+									<li class="list-inline-item "> <a href="{% url 'dashboard' %}"><strong>Home</strong></a> </li>
+									<li class="list-inline-item seprate"> <span>/</span> </li>
+                                    <li class="list-inline-item"><strong>Add Money To User Wallet</strong></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	</br>
+                <div class="col-lg-12">
+                    <form action="{% url 'userWallet_bonus_add' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Add Money To User Wallet</strong>
+
+                            </div>
+
+                            <div>
+                                <div class="card-body card-block row">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Add  :  </label>
+                                    </div>
+
+                                    <div class="col-6 col-md-3">
+                                        <input type="number" id="bonus" name="bonus" class="form-control">
+
+                                    </div>
+                                    <div>
+                                        <button type="submit" id="button" class="btn btn-primary btn-sm active" style="margin-left: 15%;">Add Bonus </button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
+
+
+<!-- END DATA TABLE -->
+
+{% endblock %}

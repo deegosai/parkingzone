@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Society View</title>
+</head>
+<body>
+<table><tbody>
+{% for x in dictionary %}
+    <tr>
+        <td>{{ x.name }}</td>
+        <td>{{ x.city }}</td>
+        <td>{{ x.state }}</td>
+        <td>{{ x.country}}</td>
+    </tr>
+{% endfor %}
+</tbody></table>
+</body>
+</html>

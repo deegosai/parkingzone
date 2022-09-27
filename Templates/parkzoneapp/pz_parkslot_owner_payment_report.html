@@ -1,0 +1,93 @@
+{% extends 'basic.html' %}
+{% load widget_tweaks %}
+{% block body %}
+<div class="main-content" style="padding-top: 0px;">
+    <section class="au-breadcrumb ">
+		<div class="section__content section__content--p30">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="au-breadcrumb-content">
+							<div class="au-breadcrumb-left"> <i class="zmdi zmdi-home"></i>
+								<ul class="list-unstyled list-inline au-breadcrumb__list">
+									<li class="list-inline-item "> <a href="{% url 'dashboard' %}"><strong>Home</strong></a> </li>
+									<li class="list-inline-item seprate"> <span>/</span> </li>
+                                    <li class="list-inline-item"><strong>ParkSlot Owner Payment History</strong></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	</br>
+
+                <div class="col-md-12">
+                    <div class="table-responsive table--no-card m-b-30">
+                        <table class="table table-borderless table-striped table-earning">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Amount</th>
+                                <th>Commision Paid Amount</th>
+                                <th>Commision Due Amount</th>
+                                <th>Payment Status</th>
+                                <th>Booking Month</th>
+                                <th>Payment Created At</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if park_slot_owner_commision_history %}
+                            {% for x in park_slot_owner_commision_history %}
+                            <tr>
+                                <td>{{x.park_slot_owner.name}}</td>
+                                <td>{{ x.amount}}</td>
+                                <td>{{ x.commision_paid_amount }}</td>
+                                <td>{{ x.commision_due_amount }}</td>
+                                {% if x.payment_status == "paid" %}
+                                <td><span class="badge badge-pill badge-success">{{ x.payment_status }}</span></td>
+                                {% elif x.payment_status == "due" %}
+                                <td><span class="badge badge-pill badge-danger">{{ x.payment_status }}</span></td>
+                                {% endif %}
+                                <td>{{x.month}}</td>
+                                <td>{{x.created_at}}</td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                             <div class="col-md-12"><p class="text-center">Not Found Record</p></div>
+                             {% endif %}
+                            </tbody>
+                        </table>
+  {% if park_slot_owner_Commision_history.has_other_pages %}
+  <ul class="pagination">
+      {% if park_slot_owner_Commision_history.has_previous %}
+      <li class="page-item">
+      <a class="page-link" href="?page={{ park_slot_owner_Commision_history.previous_page_number }}">Previous</a>
+    </li>
+      {% else %}
+      {% for i in park_slot_owner_Commision_history.paginator.page_range %}
+      {% if park_slot_owner_Commision_history.number == i %}
+    <li class="page-item"><a class="page-link" >1</a></li>
+      {% else %}
+    <li class="page-item active">
+      <a class="page-link" href="?page={{ park_slot_owner_Commision_history.next_page_number }}">2 <span class="sr-only">(current)</span></a>
+    </li>
+      {% endif %}
+ {% endfor %}
+      {% if park_slot_owner_Commision_history.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ park_slot_owner_Commision_history.next_page_number }}">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ park_slot_owner_Commision_history.next_page_number }}">Next</a>
+    </li>
+      {% endif %}
+  </ul>
+       {% endif %}
+        {% endif %}
+                    </div>
+                </div>
+
+                <!-- END DATA TABLE -->
+            </div>
+
+{% endblock %}

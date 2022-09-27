@@ -1,0 +1,157 @@
+{% extends 'basic.html' %}
+
+{% load widget_tweaks %}
+{% block body %}
+
+<div class="main-content"  style="padding-top: 0px;">
+   <section class="au-breadcrumb ">
+		<div class="section__content section__content--p30">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="au-breadcrumb-content">
+							<div class="au-breadcrumb-left"> <i class="zmdi zmdi-home"></i>
+								<ul class="list-unstyled list-inline au-breadcrumb__list">
+									<li class="list-inline-item "> <a href="{% url 'dashboard' %}"><strong>Home</strong></a> </li>
+									<li class="list-inline-item seprate"> <span>/</span> </li>
+                                    <li class="list-inline-item"><strong>Society Edit</strong></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	</br>
+            <div class="col-lg-12">
+                <form action="{% url 'pz_society_detail_update' %}" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" value="{{Society.id}}" name="socid" />
+                    {% csrf_token %}
+
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Society </strong>
+                            <small> Update</small>
+                        </div>
+                        <div class="card-body card-block">
+                            <div class="form-group">
+                                <label class="form-control-label">Name</label>
+                                {% render_field form.name class="form-control" value=form.name %}
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Location</label>
+                                {% render_field form.location class="form-control" value=form.location %}
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">City</label>
+                                {% render_field form.city class="form-control" value=form.city %}
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">State</label>
+                                {% render_field form.state class="form-control" value=form.state %}
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Country</label>
+                                {% render_field form.country class="form-control" value=form.country %}
+                            </div>
+                               <div class="form-group">
+                <label class="form-control-label">Two wheeler hourly price</label>
+                {% render_field form.two_wheel_hourly_price class="form-control" id="two_wheel_hourly_price" %}
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">Two wheeler weekly price</label>
+                {% render_field form.two_wheel_weekly_price class="form-control" id="two_wheel_weekly_price" %}
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">Two wheeler monthly price</label>
+                {% render_field form.two_wheel_monthly_price class="form-control" id="two_wheel_monthly_price" %}
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">Two wheeler daily price</label>
+                {% render_field form.two_wheel_daily_price class="form-control" id="two_wheel_daily_price" %}
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">Four wheeler hourly price</label>
+                {% render_field form.four_wheel_hourly_price class="form-control" id="four_wheel_hourly_price" %}
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">Four wheeler weekly price</label>
+                {% render_field form.four_wheel_weekly_price class="form-control" id="four_wheel_weekly_price" %}
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">Four wheeler monthly price</label>
+                {% render_field form.four_wheel_monthly_price class="form-control" id="four_wheel_weekly_price" %}
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">Four wheeler daily price</label>
+                {% render_field form.four_wheel_daily_price class="form-control" id="four_wheel_daily_price" %}
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">Number Of Parking</label>
+                {% render_field form.number_of_parking class="form-control" id="number_of_parking"%}
+            </div>
+
+            <div class="form-group">
+                <label class="form-control-label">opening time</label>
+                {% render_field form.opening_time class="form-control" id="opening_time" %}
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">closing time</label>
+                {% render_field form.closing_time class="form-control" id="closing_time" %}
+            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Longtitude</label>
+                                {% render_field form.longtitude class="form-control" value=form.longtitude %}
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label">Langtitude</label>
+                                {% render_field form.langtitude class="form-control" value=form.langtitude %}
+                            </div>
+<div class="form-group">
+                <label class="form-control-label">Bank Name</label>
+                {% render_field form.bank_name class="form-control" id="bank_name" %}
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">Branch</label>
+                {% render_field form.branch class="form-control" id="branch" %}
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">Account Number</label>
+                {% render_field form.account_number class="form-control" id="account_number" %}
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">IFSC Code</label>
+                {% render_field form.ifsc_code class="form-control" id="ifsc_code" %}
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">Cancel Cheque</label>
+                {% render_field form.cancel_check class="form-control" id="cancel_check" %}
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">Commision</label>
+                {% render_field form.commision class="form-control" id="commision" %}
+            </div>
+                            <div>
+                                 <button type="submit" class="btn btn-success btn-sm">
+<i class="fa fa-dot-circle-o"></i> Update
+</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% if messages %}
+<ul class="messages my-5 text-center">
+    {% for message in messages %}
+    <hr>
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+</ul>
+{% endif %}
+        </div>
+
+
+{% endblock %}

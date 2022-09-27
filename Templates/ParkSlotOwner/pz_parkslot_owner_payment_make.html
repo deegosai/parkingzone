@@ -1,0 +1,187 @@
+{% extends 'basic.html' %} {% load widget_tweaks %} {% block body %}
+
+<div class="main-content" style="padding-top: 0px;">
+    <div class="main-content" style="padding-top: 0px;">
+    <section class="au-breadcrumb ">
+		<div class="section__content section__content--p30">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="au-breadcrumb-content">
+							<div class="au-breadcrumb-left"> <i class="zmdi zmdi-home"></i>
+								<ul class="list-unstyled list-inline au-breadcrumb__list">
+									<li class="list-inline-item "> <a href="{% url 'dashboard' %}"><strong>Home</strong></a> </li>
+									<li class="list-inline-item seprate"> <span>/</span> </li>
+                                    <li class="list-inline-item"><strong>ParkSlot Owner Make Payment</strong></a></li>
+
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	</br>
+
+                <div class="col-lg-12">
+                    <form action="{% url 'parkingslotowner_and_admin_payment_report' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>ParkSlot Owner Make Payment Report</strong>
+
+                            </div>
+                            <div class="card-body card-block row">
+                                <div>
+                                    <div class="form-group">
+                                        <label class="form-control-label"> Select Park slot owner</label>
+                                    </div>
+                                    <div>
+                                        <select name="pso" id="pso">
+                                            {%if pso%}
+                                            <option value="{{pso}}" selected>{{name}}</option>
+
+                                            {% else %}
+                                            {% for x in Park_Slot_Owner %}
+                                            <option value="{{x.id}}">{{x.name}}</option>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div style="margin-left: 10%;">
+                                    <div class="form-group" >
+                                        <label class="form-control-label">Select Month:</label>
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" value="{{month}}" placeholder="yyyy-mm-dd" name="month" id="datepicker"/>
+                                    </div>
+                                </div>
+
+                                <div style="margin-left: 10%; margin-top: 4%;">
+                                    <form action="{% url 'parkingslotowner_and_admin_payment_report' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" value="{{pso}}" name="abc" id="selected_ps_owner"/>
+                                        <button type="submit" id="po1" class="btn btn-primary btn-sm active" style="margin-left: 15%;">Get Detail Report</button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% if amount %}
+                        <div>
+
+                        <div class="form-group">
+                            <label class="form-control-label">IFSC Code</label>
+                            <input type="text" name="IFSC" value="{{selected_society.ifsc_code}}" id="IFSC" class="form-control" required="" readonly>
+                        </div>
+                         <div class="form-group" >
+                            <label class="form-control-label">Amount</label>
+                            <input type="text" value="{{amount}}" placeholder="" class="form-control" id="amt" name="amt" />
+                        </div>
+                         <div class="form-group" >
+                            <label class="form-control-label">Commision Pay </label>
+                            <input type="text"  placeholder="" class="form-control" name="pay" id="pay"  oninput="updateDue()"/>
+                        </div>
+                        <div class="form-group" >
+                            <label class="form-control-label">Commision Due </label>
+                            <input type="text"  placeholder="" class="form-control" name="due" id="due" readonly />
+                        </div>
+                        <div style="margin-left: 10%; margin-top: 4%;">
+                            {% if isDue %}
+                            <form action="{% url 'update_park_slot_owner_Payment' %}" method="post">
+                            {% else %}
+                                <form action="{% url 'save_ps_owner_Payment' %}" method="post">
+                            {% endif %}
+                                {% csrf_token %}
+                                <input type="hidden" name="amt_"  id="amt_" value="{{amount}}"
+                                   required/>
+                                <input type="hidden" name="paidamount" id="paidamount"
+                                   required/>
+                                <input type="hidden" name="dueamount" id="dueamount"
+                                   required/>
+                                <input type="hidden" name="selected_ps_owner" value="{{pso}}" id="selected_ps_owner1"
+                                   required/>
+                                <input type="hidden" name="selected_month" value="{{selected_month}}" id="selected_month"
+                                   required/>
+                                <button type="submit" id="buttonPay" class="btn btn-primary btn-sm active" style="margin-left: 15%;">Make Payment</button>
+                            </form>
+                                </form>
+                        </div>
+                    </div>
+                            {% endif %}
+                        </div>
+                    </form>
+
+                </div>
+
+
+
+
+        <div class="col-lg-12">
+            <table class="table table-borderless table-striped table-earning">
+                <thead>
+                    <tr>
+                        <th>Parkslot owner Name</th>
+                        <th>Parkslot owner Commision</th>
+                        <th>Amount</th>
+                        <th>Commision Paid</th>
+                        <th>commision Due</th>
+                        <th>Month</th>
+                        <th>Payment Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{data.park_slot_owner.name}}</td>
+                        <td>{{data.park_slot_owner.commision}}</td>
+                        <td>{{data.amount}}</td>
+                        <td>{{data.commision_paid_amount}}</td>
+                        <td>{{data.commision_due_amount}}</td>
+                        <td>{{data.month}}</td>
+                        {% if data.payment_status == "paid" %}
+                        <td><span class="badge badge-pill badge-success">{{data.payment_status}}</span></td>
+                        {% else %}
+                        <td><span class="badge badge-pill badge-danger">{{data.payment_status}}</span></td>
+                        {% endif %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    {% if message %}
+                    <ul class="messages my-5 text-center">
+
+                        <hr/>
+                        <div class="alert alert-success" role="alert">
+                            {{ message }}
+                        </div>
+
+                    </ul>
+                    {% endif %}
+
+</div>
+<script>
+    function updateDue() {
+        var total = parseInt(document.getElementById("amt").value);
+        var val2 = parseInt(document.getElementById("pay").value);
+
+        // to make sure that they are numbers
+        if (!total) {
+            total = 0;
+        }
+        if (!val2) {
+            val2 = 0;
+        }
+
+        var ansD = total - val2;
+
+        document.getElementById("dueamount").value = ansD;
+        document.getElementById("paidamount").value=val2;
+        document.getElementById("due").value=ansD;
+
+
+    }
+</script>
+
+{% endblock %}

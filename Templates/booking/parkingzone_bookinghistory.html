@@ -1,0 +1,84 @@
+{% extends 'basic.html' %}
+
+{% load widget_tweaks %}
+{% block body %}
+
+
+<div class="main-content" style="padding-top: 0px;">
+    <section class="au-breadcrumb ">
+		<div class="section__content section__content--p30">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="au-breadcrumb-content">
+							<div class="au-breadcrumb-left"> <i class="zmdi zmdi-home"></i>
+								<ul class="list-unstyled list-inline au-breadcrumb__list">
+									<li class="list-inline-item "> <a href="{% url 'dashboard' %}"><strong>Home</strong></a> </li>
+									<li class="list-inline-item seprate"> <span>/</span> </li>
+                                    <li class="list-inline-item"><a href="{% url 'Booking_view' %}"><strong>Booking View</strong></a></li>
+                                    <li class="list-inline-item seprate"> <span>/</span> </li>
+                                    <li class="list-inline-item"><strong>Booking History</strong></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	</br>
+        <div class="col-md-12">
+
+            <div class="table-responsive table--no-card m-b-30">
+
+                <table class="table table-borderless table-striped table-earning">
+                    <thead>
+                    <tr>
+                        <th>Booked User</th>
+                        <th>Booking Package</th>
+                        <th>CheckIn Date</th>
+                        <th>CheckOut Date</th>
+                        <th>CheckIn Time</th>
+                        <th>CheckOut time time</th>
+
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if booking_history %}
+                    {% for x in booking_history %}
+                    <tr> <td>{{booking_name}}</td>
+                        <td>{{booking_package}}</td>
+                        <td>{{x.checkin_date}}</td>
+                        <td>{{x.checkout_date}}</td>
+                        <td>{{x.checkin_time}}</td>
+                        <td>{{x.checkout_time}}</td>
+
+                    </tr>
+                    {% endfor %}
+                     {% else %}
+
+                     <div class="col-md-12"><p class="text-center">Not Found Record</p></div>
+                     {% endif %}
+
+                    </tbody>
+                </table>
+                 {% include 'society/design.html' %}
+
+            </div>
+            {% if messages %}
+                <ul class="messages my-5 text-center">
+                    {% for message in messages %}
+                    <hr />
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </ul>
+        {% endif %}
+        </div>
+
+        <!-- END DATA TABLE -->
+    </div>
+
+{% endblock %}

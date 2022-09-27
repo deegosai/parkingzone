@@ -1,0 +1,277 @@
+{% extends 'basic.html' %}
+
+{% load static %}
+{% block body %}
+
+
+<div class="main-content" style="padding-top: 0px;">
+
+	<section class="au-breadcrumb ">
+		<div class="section__content section__content--p30">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="au-breadcrumb-content">
+							<div class="au-breadcrumb-left"> <i class="zmdi zmdi-home"></i>
+								<ul class="list-unstyled list-inline au-breadcrumb__list">
+									<li class="list-inline-item "> <strong>Home</strong></li>
+
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</br>
+    <div class="col-md-12">
+            <br>
+            {% if request.session.usertype == "admin" %}
+            <div class="row m-t-25">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c1">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="text">
+                                    <h2>{{a}}</h2>
+                                    <span>Total Societies</span>
+                                </div>
+                            </div>
+                            <div class="overview-chart">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c2">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="text">
+                                    <h2>{{b}}</h2>
+                                    <span>Total Parkslot</span>
+                                </div>
+                            </div>
+                            <div class="overview-chart">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c3">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="text">
+                                    <h2>{{c}}</h2>
+                                    <span>Total Users</span>
+                                </div>
+                            </div>
+                            <div class="overview-chart">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-sm-6 col-lg-3">
+                    <div class="overview-item overview-item--c2">
+                        <div class="overview__inner">
+                            <div class="overview-box clearfix">
+                                <div class="text">
+                                    <h2>{{d}}</h2>
+                                    <span>Total Booking</span>
+                                </div>
+                            </div>
+                            <div class="overview-chart">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                           <center><h3 class="title-2 m-b-40" >Admin Commision</h3></center>
+                             <canvas id="admincommision" width="150" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                           <center><h3 class="title-2 m-b-40" >User last 10 days of Booking</h3></center>
+                             <canvas id="mychart1" width="150" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                           <center><h3 class="title-2 m-b-40" >Booking</h3></center>
+                             <canvas id="user" width="150" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="col-sm-6">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                           <center><h5 class="title-2 m-b-40" >Today : City vise ParkSlot Count</h5></center>
+                            <br />
+                            <center>
+                            <select onchange="chart4()" name="city_select" id="city_select">
+                                <option selected>Select City</option>
+                                {% for x in city_list%}
+                                <option value="{{x}}">{{x}}</option>
+                                {% endfor %}
+                            </select>
+                            </center>
+                             <canvas id="mychart4" width="150" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                           <center><h5 class="title-2 m-b-40" >City Wise ParkSlot Count of last 10 days</h5></center>
+                            <br />
+                            <center>
+                            <select onchange="chart5()" name="city" id="city">
+                                <option value="notme" selected>Select City</option>
+                                {% for x in city%}
+                                <option value="{{x}}">{{x}}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="date"  oninput="chart5()" class="form-control" name="start_date"  id="start_date">
+                            <input type="date"  oninput="chart5()" class="form-control" name="end_date"  id="end_date">
+                                </center>
+                             <canvas id="mychart5" width="150" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            {% endif %}
+                {% if request.session.usertype == "societysecretry" %}
+                <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                           <center><h3 class="title-2 m-b-40" >User last 10 days of Booking</h3></center>
+                             <canvas id="mychart2" width="150" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                           <center><h5 class="title-2 m-b-40" >Today : City vise ParkSlot Count</h5></center>
+                            <br />
+                            <center>
+                            <select onchange="chart4()" name="city_select" id="city_select">
+                                <option selected>Select City</option>
+                                {% for x in city_list%}
+                                <option value="{{x}}">{{x}}</option>
+                                {% endfor %}
+                            </select>
+
+                            </center>
+                             <canvas id="mychart4" width="150" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+             <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                           <center><h5 class="title-2 m-b-40" >City Wise ParkSlot Count of last 10 days</h5></center>
+                            <br />
+                            <center>
+                            <select onchange="chart5()" name="city" id="city">
+                                <option value="notme" selected>Select City</option>
+                                {% for x in city%}
+                                <option value="{{x}}">{{x}}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="date"  oninput="chart5()" class="form-control" name="start_date"  id="start_date">
+                            <input type="date"  oninput="chart5()" class="form-control" name="end_date"  id="end_date">
+                                </center>
+                             <canvas id="mychart5" width="150" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+                </div>
+        </div>
+                 {% endif %}
+                 {% if request.session.usertype == "parkingslotowner" %}
+                <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                           <center><h3 class="title-2 m-b-40" >User last 10 days of Booking</h3></center>
+                             <canvas id="mychart3" width="150" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-sm-6">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                           <center><h5 class="title-2 m-b-40" >Today : City vise ParkSlot Count</h5></center>
+                            <br />
+                            <center>
+                            <select onchange="chart4()" name="city_select" id="city_select">
+                                <option selected>Select City</option>
+                                {% for x in city_list%}
+                                <option value="{{x}}">{{x}}</option>
+                                {% endfor %}
+                            </select>
+
+                            </center>
+                             <canvas id="mychart4" width="150" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="au-card m-b-30">
+                        <div class="au-card-inner">
+                           <center><h5 class="title-2 m-b-40" >City Wise ParkSlot Count of last 10 days</h5></center>
+                            <br />
+                            <center>
+                            <select onchange="chart5()" name="city" id="city">
+                                <option value="notme" selected>Select City</option>
+                                {% for x in city%}
+                                <option value="{{x}}">{{x}}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="date"  oninput="chart5()" class="form-control" name="start_date"  id="start_date">
+                            <input type="date"  oninput="chart5()" class="form-control" name="end_date"  id="end_date">
+                                </center>
+                             <canvas id="mychart5" width="150" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       </div>
+                 {% endif %}
+</div>
+</div>
+</div>
+{% endblock %}

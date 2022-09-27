@@ -1,0 +1,94 @@
+{% extends 'basic.html' %}
+
+{% load widget_tweaks %}
+{% block body %}
+
+<div class="main-content" style="padding-top: 0px;">
+    <section class="au-breadcrumb ">
+		<div class="section__content section__content--p30">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="au-breadcrumb-content">
+							<div class="au-breadcrumb-left"> <i class="zmdi zmdi-home"></i>
+								<ul class="list-unstyled list-inline au-breadcrumb__list">
+									<li class="list-inline-item "> <a href="{% url 'dashboard' %}"><strong>Home</strong></a> </li>
+									<li class="list-inline-item seprate"> <span>/</span> </li>
+                                    <li class="list-inline-item"><strong>Society Detail</strong></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	</br>
+    <div class="col-lg-12">
+
+
+        <div class="card">
+            <div class="card-header">
+                <strong>Society </strong>
+                <small> </small>
+            </div>
+
+            <div class="card-body card-block">
+                <div class="form-group">
+                    <label class="form-control-label">Society Name</label><br>
+                    <input class="form-control" readonly value="{{society.name}}">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Location</label>
+                    <input class="form-control" readonly value="{{society.location}}">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">City</label>
+                    <input class="form-control" readonly value="{{society.city}}">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">State</label>
+                    <input class="form-control" readonly value="{{society.state}}">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Country</label>
+                    <input class="form-control" readonly value="{{society.country}}">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Longtitude</label>
+                    <input class="form-control" readonly value="{{society.longtitude}}">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">Langtitude</label>
+                    <input class="form-control" readonly value="{{society.langtitude}}">
+                </div>
+
+                <div>
+
+                    <form action="{% url 'pz_society_detail_edit' %}" method="POST">
+                        {% csrf_token %}
+                        <input hidden value="{{society.id}}" name="socid"/>
+                        <button type="submit" class="btn btn-success btn-sm">
+                            <i class="fa fa-dot-circle-o"></i> Update
+                        </button>
+                    </form>
+                    <br>
+
+                </div>
+{% if messages %}
+        <ul class="messages my-5 text-center">
+            {% for message in messages %}
+            <hr>
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+        {% endblock %}

@@ -1,0 +1,30 @@
+
+ <nav aria-label="...">
+       {% if park_slot.has_other_pages %}
+  <ul class="pagination">
+      {% if park_slot.has_previous %}
+      <li class="page-item">
+      <a class="page-link" href="?page={{ park_slot.previous_page_number }}">Previous</a>
+    </li>
+      {% else %}
+      {% for i in park_slot.paginator.page_range %}
+    {% if park_slot.number == i %}
+    <li class="page-item"><a class="page-link" >1</a></li>
+      {% else %}
+    <li class="page-item active">
+      <a class="page-link" href="?page={{ park_slot.next_page_number }}">2 <span class="sr-only">(current)</span></a>
+    </li>
+      {% endif %}
+ {% endfor %}
+      {% if park_slot.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ park_slot.next_page_number }}">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ park_slot.next_page_number }}">Next</a>
+    </li>
+      {% endif %}
+  </ul>
+       {% endif %}
+        {% endif %}
+</nav>
+
+
